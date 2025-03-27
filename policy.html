@@ -43,6 +43,8 @@
             font-size: 1.2rem;
             letter-spacing: 1px;
             color: var(--accent-color);
+            cursor: pointer;
+
         }
         
         .pdf-controls {
@@ -128,7 +130,7 @@
 </head>
 <body>
     <div class="pdf-header">
-        <div class="pdf-title">DOCUMENT VIEWER</div>
+        <div class="pdf-title" id="goHome">DOCUMENT VIEWER</div>
         <div class="pdf-controls">
             <button class="pdf-btn" id="prevPage">PREV</button>
             <div class="page-info">
@@ -172,6 +174,15 @@
         const zoomInBtn = document.getElementById('zoomIn');
         const zoomOutBtn = document.getElementById('zoomOut');
         const downloadBtn = document.getElementById('downloadBtn');
+        const header = document.getElementById('goHome');
+		
+		video.addEventListener('click', function() {
+            window.location.href = "pages.html";
+            // Replace with your desired action
+            // window.location.href = "next-page.html";
+        });
+        
+        
         
         // Load PDF
         function loadPdf() {
