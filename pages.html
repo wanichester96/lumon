@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="icon.png">
+    <title>pages</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+	
+    <style>
+		
+				 /* Transition animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+			animation: fadeIn 0.5s ease-in;
+            background-color: #00030a;
+            color: #fff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+		
+		h2{
+			font-family:"Times New Roman";
+			color: #CDCBCB;
+			opacity:0.5;
+			font-weight: 100;
+			letter-spacing: 0.5rem;
+			margin-top: -20%;
+			font-style: italic;
+			
+		}
+		
+		    .center-video {
+            position: fixed;
+            top: 30%;
+            right: 700px;
+            width: 180px; /* Adjust size as needed */
+            height: auto;
+            z-index: 1000;
+			cursor: pointer;
+
+        }
+       
+        
+        .content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        
+        .links {
+            margin-top: 2rem;
+			margin-left: 30rem;
+			width: 100%;
+			height: 50%;
+            display: fixed;
+			text-align: left;
+			letter-spacing: 0.3rem ;
+			line-height: 3rem;
+			text-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+
+        }
+        
+        a {
+			font-family:"Michroma";
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 3px;
+		
+		}
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #00f3ff;
+            transition: width 0.3s ease;
+        }
+        
+        a:hover::after {
+            width: 100%;
+        }
+        
+     
+        
+        @media (max-width: 768px) {
+
+            
+            .links {
+                flex-direction: column;
+                gap: 3rem;
+            }
+        }
+    .goHome {
+}
+    </style>
+</head>
+<body>
+	
+ <audio autoplay loop>
+  <source src="Tokens.mp3" type="audio/mpeg">
+  <source src="Tokens.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+	    <video class="center-video" id="goHome" autoplay muted loop >
+        <source src="logo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+</video>
+    <div class="video-container">
+        <video id="bgVideo" autoplay muted loop playsinline>
+            <source src="https://severance.iamrob.in/video/severance-loop.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+    <div class="content">
+   <h2>" Unity in Serverance "</h2> <br>
+		
+        <div class="links">
+			
+            <a href="mdr.html" target="_blank">Macrodata Refinement Files</a><br>
+            <a href="policy.html" target="_blank">Lumon Policies</a><br>
+            <a href="https://severance.wiki/Start" target="_blank">About Us</a>
+			<br>
+        </div>
+    </div>
+    
+    
+    <script>
+        const video = document.getElementById('goHome');
+		
+		video.addEventListener('click', function() {
+            window.location.href = "index.html";
+            // Replace with your desired action
+            // window.location.href = "next-page.html";
+        });
+        
+  
+    </script>
+</body>
+</html>
