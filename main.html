@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main page</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+	
+    <style>
+		
+				 /* Transition animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+		
+        body {
+			animation: fadeIn 0.5s ease-in;
+            background-color: #00030a;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        
+        .corner-video {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 180px; /* Adjust size as needed */
+            height: auto;
+            z-index: 1000;
+			cursor: pointer;
+
+        }
+		        .neon-line {
+			position: fixed;
+            top: 190px;
+			right: 20px;
+			align-content: center;
+            width: 95%;
+            height: 2px;
+            background-color: #00f3ff;
+            box-shadow: 0 0 10px #00f3ff, 
+                        0 0 20px #00f3ff, 
+                        0 0 30px #00f3ff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #00f3ff, 
+                            0 0 20px #00f3ff;
+            }
+            to {
+                box-shadow: 0 0 15px #00f3ff, 
+                            0 0 30px #00f3ff, 
+                            0 0 45px #00f3ff;
+            }
+        }
+		
+		.content {
+            position: absolute;
+            top: 10%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        h1 {
+			font-family:"Michroma";
+            font-size: 3rem;
+            font-weight: 50;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+			color: #00f3ff;
+        }
+		
+		    .grid-container {
+			position: absolute;
+			transform: translate(10%, 40%);
+			display: grid;
+            grid-template-rows: repeat(5, 1fr);
+            grid-template-columns: repeat(12, 1fr);
+            gap: 10px;
+            width: 90%;
+            height: 70%;
+        }
+        
+        .number-cell {
+            display: inline-flex;
+            color: white;
+            font-size: 2rem;
+			top: 100px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: float 3s infinite alternate;
+            cursor: default;
+            user-select: none;
+        }
+        
+        .number-cell:hover {
+            transform: scale(1.5);
+            z-index: 10;
+            animation: glow 1.5s ease-in-out infinite alternate;
+			border-radius: 50%;
+        }
+		
+		@keyframes glow {
+            from {
+                text-shadow:  0 0 10px #FFFAE4, 
+                            0 0 20px #EFEFF6;
+            }
+            to {
+               text-shadow: 0 0 15px #FFFAE4, 
+                            0 0 30px #EFEFF6, 
+                            0 0 45px #EFEFF6;
+            }
+		}
+		@keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+           
+            }
+            50% {
+                transform: translateY(-10px) rotate(8deg);
+				transform: translateX(-5px) rotate(4deg);
+               
+            }
+        }
+        
+        @keyframes shake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-2px, -1px) rotate(-1deg); }
+            50% { transform: translate(1px, 1px) rotate(1deg); }
+            75% { transform: translate(1px, -2px) rotate(1deg); }
+            100% { transform: translate(-2px, 3px) rotate(-1deg); }
+        }
+        
+        @media (max-width: 368px) {
+            .grid-container {
+                grid-template-rows: repeat(12, 1fr);
+                grid-template-columns: repeat(5, 1fr);
+                gap: 5px;
+            }
+            
+            .number-cell {
+                font-size: 2rem;
+			}
+			
+			
+		}
+
+    </style>
+</head>
+<body>
+   
+	
+    <img class="corner-video" alt="Lumon Logo" src="logoimage.jpg" width="600" height="400" id="logoImage" >
+      
+	
+<div class="neon-line"></div>
+	<div class="content">
+        <h1>Allentown</h1>
+	</div>
+	
+ <div class="grid-container" id="gridContainer"></div>
+
+    <script>
+        const gridContainer = document.getElementById('gridContainer');
+		const cursorFollower = document.getElementById('cursorFollower');
+        const rows = 5;
+        const cols = 12;
+		const activationRadius = 100; // pixels
+        const nearbyRadius = 150; 
+        
+        // Create grid cells with random numbers
+        for (let i = 1; i < rows * cols; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'number-cell';
+            cell.textContent = Math.floor(Math.random() * 9);
+            gridContainer.appendChild(cell);
+            
+			
+            // Change number on click
+            cell.addEventListener('click', function() {
+                this.textContent = Math.floor(Math.random() * 9);
+            });
+        }
+		
+		    const image = document.getElementById('logoImage');
+		
+		image.addEventListener('click', function() {
+            window.location.href = "index.html";
+            // Replace with your desired action
+            // window.location.href = "next-page.html";
+        });
+        
+     
+    </script>
+
+</body>
+</html>

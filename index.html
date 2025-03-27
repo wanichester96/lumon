@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/x-icon" href="icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro</title>
+    <style>
+		
+		 /* Transition animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+		
+
+        body {
+			animation: fadeIn 0.5s ease-in;
+            background-color:  #00030a;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        
+        .video-container {
+            width: 80%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+        }
+        
+        .action-button {
+            display: none;
+			position: fixed;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #0066ff, #00ccff);
+            color: white;
+            border: none;
+            border-radius: 30px;
+			font-family: "Helvetica Neue", Helvetica, Arial, "sans-serif";
+			font: "Helvetica Neue";
+			font-style: italic;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="myVideo" autoplay muted>
+            <source src="intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <button id="actionButton" class="action-button"> " Praise Kier "</button>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        const button = document.getElementById('actionButton');
+        
+        // Remove muted attribute when user interacts (for sound)
+        video.addEventListener('click', function() {
+            this.muted = false;
+        });
+        
+        // Show button when video ends
+        video.addEventListener('ended', function() {
+            button.style.display = 'block';
+        });
+        
+        // Button click action
+        button.addEventListener('click', function() {
+            window.location.href = "pages.html";
+            // Replace with your desired action
+            // window.location.href = "next-page.html";
+        });
+    </script>
+</body>
+</html>

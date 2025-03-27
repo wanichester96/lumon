@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lexington Letter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00f0ff;
+            --control-bg: rgba(30, 30, 30, 0.8);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Michroma', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .pdf-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--control-bg);
+            z-index: 10;
+        }
+        
+        .pdf-title {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+        
+        .pdf-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .pdf-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            font-family: 'Michroma', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+        
+        .pdf-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+        }
+        
+        .pdf-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .page-info {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        .pdf-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .pdf-footer {
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--control-bg);
+        }
+        
+        /* Loading animation */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 240, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-header">
+        <div class="pdf-title">DOCUMENT VIEWER</div>
+        <div class="pdf-controls">
+            <button class="pdf-btn" id="prevPage">PREV</button>
+            <div class="page-info">
+                <span id="currentPage">1</span>/<span id="totalPages">--</span>
+            </div>
+            <button class="pdf-btn" id="nextPage">NEXT</button>
+        </div>
+        <div class="pdf-controls">
+            <button class="pdf-btn" id="zoomOut">-</button>
+            <button class="pdf-btn" id="zoomIn">+</button>
+            <button class="pdf-btn" id="downloadBtn">SAVE</button>
+        </div>
+    </div>
+    
+    <div class="pdf-container">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>LOADING DOCUMENT</div>
+        </div>
+        <iframe class="pdf-viewer" id="pdfViewer" style="display: none;"></iframe>
+    </div>
+    
+    <div class="pdf-footer">
+        LUMINOUS READER v1.0 | SECURE PDF VIEWER
+    </div>
+
+    <script>
+        // Configuration
+        const pdfUrl = 'the_lexington_letter.pdf'; // Change to your PDF path
+        let currentPage = 1;
+        let totalPages = 0;
+        let zoomLevel = 1.0;
+        
+        // Elements
+        const pdfViewer = document.getElementById('pdfViewer');
+        const loading = document.getElementById('loading');
+        const currentPageEl = document.getElementById('currentPage');
+        const totalPagesEl = document.getElementById('totalPages');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        // Load PDF
+        function loadPdf() {
+            // In a real implementation, you would use PDF.js
+            // This is a simplified version using browser's built-in viewer
+            setTimeout(() => {
+                loading.style.display = 'none';
+                pdfViewer.style.display = 'block';
+                pdfViewer.src = `${pdfUrl}#page=${currentPage}&zoom=${zoomLevel * 100}&toolbar=0`;
+                
+                // Simulate getting page count (in reality you'd use PDF.js API)
+                totalPages = 24; // This would come from PDF metadata
+                totalPagesEl.textContent = totalPages;
+            }, 1500);
+        }
+        
+        // Navigation
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                currentPageEl.textContent = currentPage;
+                pdfViewer.src = `${pdfUrl}#page=${currentPage}&zoom=${zoomLevel * 100}&toolbar=0`;
+            }
+        });
+        
+        nextPageBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                currentPageEl.textContent = currentPage;
+                pdfViewer.src = `${pdfUrl}#page=${currentPage}&zoom=${zoomLevel * 100}&toolbar=0`;
+            }
+        });
+        
+        // Zoom controls
+        zoomInBtn.addEventListener('click', () => {
+            zoomLevel = Math.min(zoomLevel + 0.25, 3.0);
+            pdfViewer.src = `${pdfUrl}#page=${currentPage}&zoom=${zoomLevel * 100}&toolbar=0`;
+        });
+        
+        zoomOutBtn.addEventListener('click', () => {
+            zoomLevel = Math.max(zoomLevel - 0.25, 0.5);
+            pdfViewer.src = `${pdfUrl}#page=${currentPage}&zoom=${zoomLevel * 100}&toolbar=0`;
+        });
+        
+        // Download
+        downloadBtn.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = pdfUrl;
+            a.download = pdfUrl.split('/').pop() || 'the_lexington_letter.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+        
+        // Initialize
+        window.addEventListener('load', loadPdf);
+    </script>
+</body>
+</html>
